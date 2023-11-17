@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "810893582689",
+    "project_id": "t2023it2-ristretto",
+    "storage_bucket": "t2023it2-ristretto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810893582689:android:2d647394d0ba4e04eb2520",
+        "android_client_info": {
+          "package_name": "com.example.ristretto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810893582689-fvomd9a9f7m4v9nsaf43rvr5c9d9iclh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_f2OkcJ56g89NyLRrxEtxw6wqPJ91Ubw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810893582689-fvomd9a9f7m4v9nsaf43rvr5c9d9iclh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810893582689:android:65e96581e717fdb8eb2520",
+        "android_client_info": {
+          "package_name": "mahinay.tupas.t2023it2_ristretto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810893582689-fvomd9a9f7m4v9nsaf43rvr5c9d9iclh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_f2OkcJ56g89NyLRrxEtxw6wqPJ91Ubw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810893582689-fvomd9a9f7m4v9nsaf43rvr5c9d9iclh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

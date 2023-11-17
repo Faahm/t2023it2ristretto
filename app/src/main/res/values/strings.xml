@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">T2023IT2Ristretto</string>
+    <string name="display_name">Display Name</string>
+    <string name="view">View</string>
+    <string name="add_item">Add Item</string>
+    <string name="logo">Logo</string>
+    <string name="logout">Logout</string>
+    <string name="photo_url">Photo URL</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register_amp_login"><![CDATA[Register & Login]]></string>
+    <string name="back">Back</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+</resources>
