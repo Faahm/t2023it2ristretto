@@ -12,33 +12,28 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private val userCollectionName = "users"
+    private val userCollection = "users"
     private val logo = "https://firebasestorage.googleapis.com/v0/b/t2023it2-ristretto.appspot.com/o/ristretto_logo_edit.png?alt=media&token=703f74df-e651-4f92-9116-3cc138faeae1"
 
+    private fun showToast(message: String) {
+        Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        val firestoreDB: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         val registerLogo = findViewById<ImageView>(R.id.registerLogo)
         val etPhotoUrl = findViewById<EditText>(R.id.etRegisterPhotoUrl)
         val etDisplayName = findViewById<EditText>(R.id.etRegisterDisplayName)
         val etEmail = findViewById<EditText>(R.id.etRegisterEmail)
         val etPassword = findViewById<EditText>(R.id.etRegisterPassword)
-        val btnBack = findViewById<Button>(R.id.btnBack)
         val btnRegisterAndLogin = findViewById<Button>(R.id.btnRegisterAndLogin)
+        val btnBack = findViewById<Button>(R.id.btnBack)
 
         Glide.with(this).load(logo).into(registerLogo)
-
-        btnBack.setOnClickListener {
-            finish()
-            val loginActivity = Intent(this, LoginActivity::class.java)
-            startActivity(loginActivity)
-        }
 
         btnRegisterAndLogin.setOnClickListener {
             val email = etEmail.text.toString()
@@ -47,10 +42,10 @@ class RegisterActivity : AppCompatActivity() {
             val photoUrl = etPhotoUrl.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty() && displayName.isNotEmpty()) {
-                auth.createUserWithEmailAndPassword(email, password)
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            val user = auth.currentUser
+                            val user = firebaseAuth.currentUser
                             val userId = user?.uid ?: ""
 
                             val userData = hashMapOf(
@@ -59,40 +54,30 @@ class RegisterActivity : AppCompatActivity() {
                                 "photoUrl" to photoUrl
                             )
 
-                            db.collection(userCollectionName).document(userId)
+                            firestoreDB.collection(userCollection).document(userId)
                                 .set(userData)
                                 .addOnSuccessListener {
-                                    Toast.makeText(
-                                        baseContext,
-                                        "Registered successfully!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
+                                    showToast("Registered successfully!")
+                                    val mainActivity = Intent(this, MainActivity::class.java)
+                                    startActivity(mainActivity)
                                     finish()
                                 }
                                 .addOnFailureListener { e ->
-                                    Toast.makeText(
-                                        baseContext,
-                                        "Registration failed: ${e.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    showToast("Registration failed: ${e.message}")
                                 }
                         } else {
-                            Toast.makeText(
-                                baseContext,
-                                "Registration failed: ${task.exception?.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showToast("Registration failed.")
                         }
                     }
             } else {
-                Toast.makeText(
-                    baseContext,
-                    "Please fill in all the fields.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("Please fill in all the fields.")
             }
+        }
+
+        btnBack.setOnClickListener {
+            finish()
+            val loginActivity = Intent(this, LoginActivity::class.java)
+            startActivity(loginActivity)
         }
     }
 }

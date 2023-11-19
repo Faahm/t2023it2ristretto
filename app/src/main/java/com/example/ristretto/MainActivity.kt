@@ -7,17 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var logoutButton: Button
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        logoutButton = findViewById(R.id.mainLogoutButton)
-        auth = FirebaseAuth.getInstance()
+        val btnLogout: Button = findViewById(R.id.mainLogoutButton)
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        logoutButton.setOnClickListener {
+        btnLogout.setOnClickListener {
             signOutAndRedirectToLogin()
         }
     }
@@ -28,12 +27,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signOutAndRedirectToLogin() {
-        auth.signOut()
+        firebaseAuth.signOut()
         redirectToLoginActivity()
     }
 
     private fun checkCurrentUser() {
-        val currentUser = auth.currentUser
+        val currentUser = firebaseAuth.currentUser
         if (currentUser == null) {
             redirectToLoginActivity()
         }

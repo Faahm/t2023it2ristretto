@@ -13,13 +13,15 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginActivity : AppCompatActivity() {
     private val firebaseLogo = "https://firebasestorage.googleapis.com/v0/b/t2023it2-ristretto.appspot.com/o/ristretto_logo_edit.png?alt=media&token=703f74df-e651-4f92-9116-3cc138faeae1"
 
-    private lateinit var auth: FirebaseAuth
+    private fun showToast(message: String) {
+        Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        auth = FirebaseAuth.getInstance()
+        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
         val etEmail = findViewById<EditText>(R.id.etLoginEmail)
         val etPassword = findViewById<EditText>(R.id.etLoginPassword)
@@ -33,37 +35,25 @@ class LoginActivity : AppCompatActivity() {
             val password = etPassword.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                auth.signInWithEmailAndPassword(email, password)
+                firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                baseContext,
-                                "Login successful!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            showToast("Login successful!")
+                            val mainActivity = Intent(this, MainActivity::class.java)
+                            startActivity(mainActivity)
                             finish()
                         } else {
-                            Toast.makeText(
-                                baseContext,
-                                "Login failed: ${task.exception?.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showToast("Login failed: ${task.exception?.message}")
                         }
                     }
             } else {
-                Toast.makeText(
-                    baseContext,
-                    "Please enter both email and password.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("Please enter both email and password.")
             }
         }
 
         btnRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            val registerActivity = Intent(this, RegisterActivity::class.java)
+            startActivity(registerActivity)
             finish()
         }
     }
