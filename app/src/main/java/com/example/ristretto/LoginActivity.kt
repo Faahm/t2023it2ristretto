@@ -39,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             showToast("Login successful!")
-                            val mainActivity = Intent(this, MainActivity::class.java)
-                            startActivity(mainActivity)
+                            val dashboardActivity = Intent(this, DashboardActivity::class.java)
+                            startActivity(dashboardActivity)
                             finish()
                         } else {
                             showToast("Login failed: ${task.exception?.message}")

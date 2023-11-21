@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBF2DB"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center_horizontal|center_vertical"
     android:padding="80dp"
     tools:context=".LoginActivity">
 
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/ristretto_logo" />
 
     <EditText
         android:id="@+id/etLoginEmail"
@@ -41,14 +42,15 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FFC107"
         android:text="@string/login"
-        app:cornerRadius="5dp" />
+        app:cornerRadius="8dp" />
 
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#F44336"
         android:text="@string/register"
-        app:cornerRadius="5dp" />
+        app:cornerRadius="8dp" />
 
 </LinearLayout>

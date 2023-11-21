@@ -6,69 +6,61 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="80dp"
+    android:padding="40dp"
     android:background="#FBF2DB"
-    tools:context=".RegisterActivity">
-
-    <ImageView
-        android:id="@+id/registerLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:contentDescription="@string/logo"
-        tools:srcCompat="@drawable/ristretto_logo" />
+    tools:context=".AddItemActivity">
 
     <EditText
-        android:id="@+id/etRegisterDisplayName"
+        android:id="@+id/etItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/display_name"
+        android:hint="@string/name"
         android:inputType="text"
         android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/etRegisterPhotoUrl"
+        android:id="@+id/etItemDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/etItemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/price"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/etItemPhotoUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="@string/photo_url"
         android:inputType="text"
         android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/etRegisterEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/etRegisterPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
-
     <Button
-        android:id="@+id/btnRegisterAndLogin"
+        android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F44336"
-        android:text="@string/register_amp_login"
-        app:cornerRadius="8dp" />
+        android:backgroundTint="#FFC107"
+        android:text="@string/add"
+        app:cornerRadius="5dp" />
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#F44336"
         android:text="@string/back"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="5dp" />
 
 </LinearLayout>

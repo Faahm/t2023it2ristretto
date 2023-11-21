@@ -42,33 +42,37 @@ class RegisterActivity : AppCompatActivity() {
             val photoUrl = etPhotoUrl.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty() && displayName.isNotEmpty()) {
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = firebaseAuth.currentUser
-                            val userId = user?.uid ?: ""
+                if (displayName.split(" ").size >= 2) {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val user = firebaseAuth.currentUser
+                                val userId = user?.uid ?: ""
 
-                            val userData = hashMapOf(
-                                "email" to email,
-                                "displayName" to displayName,
-                                "photoUrl" to photoUrl
-                            )
+                                val userData = hashMapOf(
+                                    "email" to email,
+                                    "displayName" to displayName,
+                                    "photoUrl" to photoUrl
+                                )
 
-                            firestoreDB.collection(userCollection).document(userId)
-                                .set(userData)
-                                .addOnSuccessListener {
-                                    showToast("Registered successfully!")
-                                    val mainActivity = Intent(this, MainActivity::class.java)
-                                    startActivity(mainActivity)
-                                    finish()
-                                }
-                                .addOnFailureListener { e ->
-                                    showToast("Registration failed: ${e.message}")
-                                }
-                        } else {
-                            showToast("Registration failed.")
+                                firestoreDB.collection(userCollection).document(userId)
+                                    .set(userData)
+                                    .addOnSuccessListener {
+                                        showToast("Registered successfully!")
+                                        val dashboardActivity = Intent(this, DashboardActivity::class.java)
+                                        startActivity(dashboardActivity)
+                                        finish()
+                                    }
+                                    .addOnFailureListener { e ->
+                                        showToast("Registration failed: ${e.message}")
+                                    }
+                            } else {
+                                showToast("Registration failed. Check your inputted fields.")
+                            }
                         }
-                    }
+                } else {
+                    showToast("Please enter your full name in the Display Name field.")
+                }
             } else {
                 showToast("Please fill in all the fields.")
             }

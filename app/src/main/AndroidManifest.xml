@@ -19,7 +19,13 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ItemDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
