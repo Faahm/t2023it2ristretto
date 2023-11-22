@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:contentDescription="@string/logo"
-        tools:srcCompat="@drawable/ristretto_logo" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
         android:id="@+id/etRegisterDisplayName"
