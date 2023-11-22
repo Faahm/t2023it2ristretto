@@ -20,28 +20,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
                 android:gravity="start"
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp">
 
-                <Button
-                    android:id="@+id/dashboardAddButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="#5A5A5A"
-                    android:text="@string/add_item"
-                    app:cornerRadius="5dp" />
-
                 <ImageView
                     android:id="@+id/dashboardLogo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars"
-                    android:contentDescription="@string/logo" />
+                    android:layout_weight="0"
+                    android:contentDescription="@string/logo"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/dashboardLogoutButton"
@@ -57,6 +52,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/dashboardAddButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#FF9800"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:text="@string/add_item"
+                app:cornerRadius="5dp" />
 
             <LinearLayout
                 android:id="@+id/layoutLinear"
