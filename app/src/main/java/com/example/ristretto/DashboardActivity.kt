@@ -39,23 +39,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun createLinearLayoutForCard(): LinearLayout {
-        val llCard = LinearLayout(this)
-        val cardLinearLayoutParams = ActionBar.LayoutParams(
-            ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT
-        )
-        llCard.gravity = Gravity.CENTER_HORIZONTAL
-        llCard.orientation = LinearLayout.VERTICAL
-        llCard.setPadding(
-            resources.getDimensionPixelOffset(R.dimen.llCard_padding_x),
-            resources.getDimensionPixelOffset(R.dimen.llCard_padding_y),
-            resources.getDimensionPixelOffset(R.dimen.llCard_padding_x),
-            resources.getDimensionPixelOffset(R.dimen.llCard_padding_y)
-        )
-        llCard.layoutParams = cardLinearLayoutParams
-        return llCard
-    }
-
     private fun createCardView(): CardView {
         val cv = CardView(this)
         val cvParams = ActionBar.LayoutParams(
@@ -67,14 +50,31 @@ class DashboardActivity : AppCompatActivity() {
         return cv
     }
 
-    private fun createImageView(imageUrl: String): ImageView {
+    private fun createLinearLayoutForCard(): LinearLayout {
+        val llCard = LinearLayout(this)
+        val llCardParams = ActionBar.LayoutParams(
+            ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT
+        )
+        llCard.gravity = Gravity.CENTER_HORIZONTAL
+        llCard.orientation = LinearLayout.VERTICAL
+        llCard.setPadding(
+            resources.getDimensionPixelOffset(R.dimen.llCard_padding_x),
+            resources.getDimensionPixelOffset(R.dimen.llCard_padding_y),
+            resources.getDimensionPixelOffset(R.dimen.llCard_padding_x),
+            resources.getDimensionPixelOffset(R.dimen.llCard_padding_y)
+        )
+        llCard.layoutParams = llCardParams
+        return llCard
+    }
+
+    private fun createImageView(photoUrl: String): ImageView {
         val iv = ImageView(this)
         val ivParams = LinearLayout.LayoutParams(
             resources.getDimensionPixelOffset(R.dimen.iv_size),
             resources.getDimensionPixelOffset(R.dimen.iv_size)
         )
         iv.layoutParams = ivParams
-        Glide.with(this).load(imageUrl).into(iv)
+        Glide.with(this).load(photoUrl).into(iv)
         return iv
     }
 
@@ -108,13 +108,13 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun createPriceTextViewLinearLayout(): LinearLayout {
         val lltvPricebtnView = LinearLayout(this)
-        val priceViewBtnLinearLayoutParams = LinearLayout.LayoutParams(
+        val lltvPricebtnViewParams = LinearLayout.LayoutParams(
             ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT
         ).apply{
             topMargin = resources.getDimensionPixelOffset(R.dimen.tvTitle_margin_top)
         }
         lltvPricebtnView.orientation = LinearLayout.HORIZONTAL
-        lltvPricebtnView.layoutParams = priceViewBtnLinearLayoutParams
+        lltvPricebtnView.layoutParams = lltvPricebtnViewParams
 
         return lltvPricebtnView
     }
@@ -135,7 +135,7 @@ class DashboardActivity : AppCompatActivity() {
         return tvPrice
     }
 
-    private fun createViewButtonTextView(imageUrl: String, name: String, description: String, price: String): TextView {
+    private fun createViewButtonTextView(photoUrl: String, name: String, description: String, price: String): TextView {
         val btnView = TextView(this)
         btnView.layoutParams = LinearLayout.LayoutParams(
             ActionBar.LayoutParams.WRAP_CONTENT,
@@ -148,19 +148,19 @@ class DashboardActivity : AppCompatActivity() {
         btnView.setTypeface(null, Typeface.BOLD)
 
         btnView.setOnClickListener {
-            val productViewActivity = Intent(this, ItemDetailsActivity::class.java)
-            productViewActivity.putExtra("photoUrl", imageUrl)
-            productViewActivity.putExtra("name", name)
-            productViewActivity.putExtra("description", description)
-            productViewActivity.putExtra("price", price)
-            startActivity(productViewActivity)
+            val itemDetailsActivity = Intent(this, ItemDetailsActivity::class.java)
+            itemDetailsActivity.putExtra("photoUrl", photoUrl)
+            itemDetailsActivity.putExtra("name", name)
+            itemDetailsActivity.putExtra("description", description)
+            itemDetailsActivity.putExtra("price", price)
+            startActivity(itemDetailsActivity)
         }
         return btnView
     }
 
-    private fun addViewsToLayouts(
-        llCard: LinearLayout,
+    private fun addViews(
         cv: CardView,
+        llCard: LinearLayout,
         iv: ImageView,
         tvName: TextView,
         tvDescription: TextView,
@@ -172,11 +172,11 @@ class DashboardActivity : AppCompatActivity() {
         llCard.addView(iv)
         llCard.addView(tvName)
         llCard.addView(tvDescription)
+        lltvPricebtnView.addView(tvPrice)
+        lltvPricebtnView.addView(btnView)
         llCard.addView(lltvPricebtnView)
         cv.addView(llCard)
         layoutLinear.addView(cv)
-        lltvPricebtnView.addView(tvPrice)
-        lltvPricebtnView.addView(btnView)
     }
 
     private fun loadItems() {
@@ -186,30 +186,30 @@ class DashboardActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { query ->
                 for (document in query) {
-                    val imageUrl = document.data["photoUrl"].toString()
+                    val photoUrl = document.data["photoUrl"].toString()
                     val name = document.data["name"].toString()
                     val description = document.data["description"].toString()
                     val price = String.format("Php. %.2f", document.data["price"].toString().toFloat())
 
-                    val llCard = createLinearLayoutForCard()
                     val cv = createCardView()
-                    val iv = createImageView(imageUrl)
+                    val llCard = createLinearLayoutForCard()
+                    val iv = createImageView(photoUrl)
                     val tvName = createNameTextView(name)
                     val tvDescription = createDescriptionTextView(description)
                     val lltvPricebtnView = createPriceTextViewLinearLayout()
                     val tvPrice = createPriceTextView(price)
-                    val btnView = createViewButtonTextView(imageUrl, name, description, price)
+                    val btnView = createViewButtonTextView(photoUrl, name, description, price)
 
                     btnView.setOnClickListener {
                         val productViewActivity = Intent(this, ItemDetailsActivity::class.java)
-                        productViewActivity.putExtra("photoUrl", imageUrl)
+                        productViewActivity.putExtra("photoUrl", photoUrl)
                         productViewActivity.putExtra("name", name)
                         productViewActivity.putExtra("description", description)
                         productViewActivity.putExtra("price", price)
                         startActivity(productViewActivity)
                     }
 
-                    addViewsToLayouts(llCard, cv, iv, tvName, tvDescription, lltvPricebtnView, tvPrice, btnView)
+                    addViews(cv, llCard, iv, tvName, tvDescription, lltvPricebtnView, tvPrice, btnView)
                 }
             }
             .addOnFailureListener { exception ->
@@ -236,7 +236,6 @@ class DashboardActivity : AppCompatActivity() {
         btnLogout.setOnClickListener {
             signOutAndRedirectToLogin()
         }
-
         loadItems()
     }
 

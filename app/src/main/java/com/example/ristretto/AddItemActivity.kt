@@ -11,13 +11,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
 class AddItemActivity : AppCompatActivity() {
-    private val menuCollectionName = "items"
-    private lateinit var db: FirebaseFirestore
+    private val menuCollection = "items"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
-        db = FirebaseFirestore.getInstance()
+        val firestoreDB: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         val etName = findViewById<EditText>(R.id.etItemName)
         val etDescription = findViewById<EditText>(R.id.etItemDescription)
@@ -37,7 +36,7 @@ class AddItemActivity : AppCompatActivity() {
             val price = etPrice.text.toString()
             val photoUrl = etPhotoUrl.text.toString()
 
-            if (name.isNotEmpty() && description.isNotEmpty() && price.isNotEmpty() && photoUrl.isNotEmpty()) {
+            if (name.isNotEmpty() && description.isNotEmpty() && price.isNotEmpty()) {
                 val priceDouble = String.format("%.2f", price.toDouble()).toDouble()
 
                 val data = hashMapOf(
@@ -48,18 +47,18 @@ class AddItemActivity : AppCompatActivity() {
                     "dateCreated" to Timestamp(Date())
                 )
 
-                db.collection(menuCollectionName)
+                firestoreDB.collection(menuCollection)
                     .add(data)
                     .addOnSuccessListener {
                         showToast("Added item.")
-                        finish()
                         startActivity(Intent(this, DashboardActivity::class.java))
+                        finish()
                     }
                     .addOnFailureListener {
                         showToast("Item addition failed.")
                     }
             } else {
-                showToast("Please input all fields.")
+                showToast("Please input the required fields.")
             }
         }
     }
